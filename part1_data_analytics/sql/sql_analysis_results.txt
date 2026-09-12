@@ -1,0 +1,94 @@
+### 1.1a Row count (verification)
+rows_loaded           
+----------------------
+48204                 
+(1 rows)
+
+### 1.1b Date range (verification)
+first_timestamp        | last_timestamp        
+-----------------------------------------------
+2012-10-02 09:00:00    | 2018-09-30 23:00:00   
+(1 rows)
+
+### 1.1c Sample rows (verification)
+holiday                | temp                   | rain_1h                | snow_1h                | clouds_all             | weather_main           | weather_description    | date_time              | traffic_volume        
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+None                   | 288.28                 | 0.0                    | 0.0                    | 40                     | Clouds                 | scattered clouds       | 2012-10-02 09:00:00    | 5545                  
+None                   | 289.36                 | 0.0                    | 0.0                    | 75                     | Clouds                 | broken clouds          | 2012-10-02 10:00:00    | 4516                  
+None                   | 289.58                 | 0.0                    | 0.0                    | 90                     | Clouds                 | overcast clouds        | 2012-10-02 11:00:00    | 4767                  
+None                   | 290.13                 | 0.0                    | 0.0                    | 90                     | Clouds                 | overcast clouds        | 2012-10-02 12:00:00    | 5026                  
+None                   | 291.14                 | 0.0                    | 0.0                    | 75                     | Clouds                 | broken clouds          | 2012-10-02 13:00:00    | 4918                  
+(5 rows)
+
+### 1.1d Duplicate timestamp check (rows vs distinct timestamps)
+total_rows             | distinct_timestamps    | duplicate_timestamps  
+------------------------------------------------------------------------
+48204                  | 40575                  | 7629                  
+(1 rows)
+
+### 1.2a Total yearly traffic volume 2012-2017 (raw totals)
+year                   | hours_recorded         | total_volume          
+------------------------------------------------------------------------
+2012                   | 2559                   | 8208767               
+2013                   | 8573                   | 28177412              
+2014                   | 4839                   | 15731289              
+2015                   | 4373                   | 14181206              
+2016                   | 9306                   | 29494821              
+2017                   | 10605                  | 35428156              
+(6 rows)
+
+### 1.2b Year-on-year change in total volume
+year                   | total_volume           | yoy_change             | yoy_pct_change        
+-------------------------------------------------------------------------------------------------
+2012                   | 8208767                | None                   | None                  
+2013                   | 28177412               | 19968645               | 243.3                 
+2014                   | 15731289               | -12446123              | -44.2                 
+2015                   | 14181206               | -1550083               | -9.9                  
+2016                   | 29494821               | 15313615               | 108.0                 
+2017                   | 35428156               | 5933335                | 20.1                  
+(6 rows)
+
+### 1.2c Normalised view: average HOURLY volume per year (corrects for partial years)
+year                   | hours_recorded         | avg_hourly_volume     
+------------------------------------------------------------------------
+2012                   | 2559                   | 3207.8                
+2013                   | 8573                   | 3286.8                
+2014                   | 4839                   | 3250.9                
+2015                   | 4373                   | 3242.9                
+2016                   | 9306                   | 3169.4                
+2017                   | 10605                  | 3340.7                
+(6 rows)
+
+### 1.3a Holiday flag quirk: 'None' is a literal STRING, and only the 00:00 hour is tagged
+holiday                | flagged_hours          | distinct_days         
+------------------------------------------------------------------------
+Christmas Day          | 6                      | 5                     
+Columbus Day           | 5                      | 5                     
+Independence Day       | 5                      | 5                     
+Labor Day              | 7                      | 5                     
+Martin Luther King Jr Day | 6                      | 3                     
+Memorial Day           | 5                      | 5                     
+New Years Day          | 6                      | 5                     
+State Fair             | 5                      | 5                     
+Thanksgiving Day       | 6                      | 5                     
+Veterans Day           | 5                      | 5                     
+Washingtons Birthday   | 5                      | 5                     
+(11 rows)
+
+### 1.3b Temperature on New Year's Day and Labor Day 2015-2017 (matched by DATE)
+holiday_name           | holiday_date           | hours_recorded         | avg_temp_c             | min_temp_c             | max_temp_c             | total_traffic         
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Labor Day              | 2015-09-07             | 24                     | 22.2                   | 18.7                   | 26.5                   | 58327                 
+Labor Day              | 2016-09-05             | 40                     | 21.6                   | 18.7                   | 24.8                   | 74734                 
+Labor Day              | 2017-09-04             | 28                     | 17.5                   | 11.8                   | 23.1                   | 70719                 
+New Years Day          | 2015-01-01             | 0                      | None                   | None                   | None                   | None                  
+New Years Day          | 2016-01-01             | 19                     | -6.1                   | -9.2                   | -1.2                   | 34489                 
+New Years Day          | 2017-01-01             | 24                     | -3.1                   | -5.4                   | -1.3                   | 51063                 
+(6 rows)
+
+### 1.3c Context: average holiday vs non-holiday daily traffic (all years)
+day_type               | days                   | avg_daily_volume      
+------------------------------------------------------------------------
+Holiday                | 53                     | 67564.0               
+Non-holiday            | 1807                   | 84978.0               
+(2 rows)
