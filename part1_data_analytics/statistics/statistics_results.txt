@@ -1,0 +1,68 @@
+### Task 2.1 - Traffic volume descriptive statistics
+Count                : 48,204
+Mean                 : 3,259.82 vehicles/hour
+Median               : 3,380 vehicles/hour
+Std deviation (sample): 1,986.86
+Variance (sample)    : 3,947,615.32
+Minimum              : 0
+Maximum              : 7,280
+Range                : 7,280
+Q1 / Q3 / IQR        : 1,193 / 4,933 / 3,740
+Skewness             : -0.09
+
+INTERPRETATION:
+- A typical hour carries ~3,260 vehicles (mean) and the median (3,380) is close
+  to the mean, so the distribution is roughly symmetric (skewness ~ -0.1).
+- The standard deviation (~1,987) is LARGE relative to the mean (~61% of it):
+  traffic volume is highly variable across hours - quiet overnight hours and
+  busy rush hours differ by thousands of vehicles.
+- The range spans 0 to 7,280. The 0 values are suspicious (a real freeway
+  sensor rarely reads exactly zero) and are flagged for Part 2 data cleaning.
+- Half of all hours fall between 1,193 and 4,933 vehicles (IQR = 3,740).
+
+### Task 2.2 - Correlation: temperature vs traffic volume
+Pearson correlation coefficient r (temp vs traffic_volume) = 0.1303
+
+INTERPRETATION:
+- DIRECTION: positive - warmer hours are very slightly associated with higher
+  traffic volume.
+- STRENGTH: r ~ 0.13 is a WEAK correlation (|r| < 0.3). Temperature explains
+  only r^2 = 1.7% of the variance in traffic volume - practically nothing.
+- CORRELATION IS NOT CAUSATION: this weak link does not mean warm weather
+  causes traffic. Both variables are driven by confounders - time of day and
+  day of week (rush hours vs nights, weekdays vs weekends/holidays) and
+  seasonality. A proper causal claim would need to control for those.
+
+### Task 3 - Probability and congestion analysis
+Definition: CONGESTION = traffic_volume > 5,500 vehicles/hour
+Dataset size N = 48,204 hourly records
+
+3.1 BASIC PROBABILITY
+P(Congestion)            = 7,100 / 48,204 = 0.1473  (~14.7% of hours)
+P(Clear weather)         = 13,391 / 48,204 = 0.2778
+P(Congestion AND Clear)  = 1,763 / 48,204 = 0.0366
+
+3.2 CONDITIONAL PROBABILITY
+P(Clear | Congestion)      = 1,763 / 7,100 = 0.2483
+P(Temp>292K | Congestion)  = 1,867 / 7,100 = 0.2630
+
+INDEPENDENCE TEST  P(A n B) =? P(A) x P(B)
+P(Congestion) x P(Clear) = 0.0409
+P(Congestion n Clear)    = 0.0366
+-> 0.0366 != 0.0409, so weather and congestion are NOT independent.
+   The joint probability is LOWER than the independence baseline: congestion
+   happens slightly LESS often under clear skies than independence predicts.
+
+ODDS RATIO of congestion: Clear vs Cloudy weather
+P(Congestion | Clear)  = 1,763 / 13,391 = 0.1317  -> odds = 0.1516
+P(Congestion | Cloudy) = 2,592 / 15,164 = 0.1709  -> odds = 0.2062
+Odds ratio (Clear / Cloudy) = 0.7354
+
+CONCLUSION:
+- Congestion occurs in ~14.7% of all hours - it is a rush-hour phenomenon.
+- The odds of congestion in clear weather are only ~0.74x the odds in cloudy
+  weather (about 26% lower). Clear weather does NOT increase congestion risk.
+- This is consistent with the weak correlation in Task 2.2: congestion is
+  driven mainly by time-of-day and day-of-week demand, not by weather.
+  Weather conditions show only mild secondary effects (cloudy 17.1% vs
+  clear 13.2% congestion rates; snow lowest at 9.5%).
