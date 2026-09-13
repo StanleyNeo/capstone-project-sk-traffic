@@ -1,0 +1,18 @@
+2026-09-13 18:48:13,019 | INFO | __main__ | Loading raw data from M:\capstone-project-sk-traffic\data\Metro_Interstate_Traffic_Volume.csv
+2026-09-13 18:48:13,143 | INFO | __main__ | Loaded 48204 rows x 9 columns
+2026-09-13 18:48:13,151 | WARNING | __main__ | Dropped 7629 duplicate-timestamp rows (48204 -> 40575)
+2026-09-13 18:48:13,172 | WARNING | __main__ | Imputed 10 zero-Kelvin rows with monthly medians (months: [1, 2])
+2026-09-13 18:48:13,174 | WARNING | __main__ | Reset 1 rain_1h spike(s) > 100 mm to 0.0 (max was 9831.3 mm)
+2026-09-13 18:48:13,175 | INFO | __main__ | Keeping 2 zero-traffic rows (genuine near-zero event): ['2016-07-23 18:00:00', '2016-07-23 23:00:00']
+2026-09-13 18:48:13,180 | DEBUG | __main__ | Filled 40522 NaN holiday values with 'None'
+2026-09-13 18:48:13,191 | DEBUG | __main__ | Checks passed | temp range -29.76..36.92 C | rain max 55.63 mm | rows 40575
+2026-09-13 18:48:13,356 | INFO | __main__ | Wrote cleaned data -> M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv (40575 rows)
+2026-09-13 18:48:13,356 | INFO | __main__ | Pipeline finished successfully
+2026-09-13 18:55:08,771 | INFO | __main__ | Loading cleaned data from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
+2026-09-13 18:55:08,901 | DEBUG | __main__ | Added calendar + cyclical features (hour, dow, month)
+2026-09-13 18:55:08,916 | INFO | __main__ | Holiday fix: raw flag marked 53 rows (00:00 only); date-based is_holiday flags 1203 hours across 53 holiday dates
+2026-09-13 18:55:08,937 | DEBUG | __main__ | One-hot encoded weather_main into 11 columns
+2026-09-13 18:55:08,950 | INFO | __main__ | Target built: congestion = traffic_volume >= Q3 (4952) -> 10152 positives (25.02% of 40575 rows)
+2026-09-13 18:55:08,961 | INFO | __main__ | Feature table: 40575 rows x 30 columns (27 features + date_time, traffic_volume, congestion)
+2026-09-13 18:55:09,507 | INFO | __main__ | Wrote features -> M:\capstone-project-sk-traffic\data\processed\traffic_features.csv
+2026-09-13 18:55:09,508 | INFO | __main__ | Feature engineering finished successfully
