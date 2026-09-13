@@ -21,3 +21,6 @@ Thumbs.db
 # Logs (keep the required sample, exclude ad-hoc ones)
 *.log
 !pipeline.log
+
+# Trained model binaries (regenerate via train_supervised.py)
+*.joblib
