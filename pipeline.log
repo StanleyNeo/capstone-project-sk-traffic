@@ -23,3 +23,9 @@
 2026-09-13 19:50:38,670 | INFO | __main__ | Saved M:\capstone-project-sk-traffic\part2_python\figures\fig4_monthly_rhythm.png | highest Aug (3430) | lowest Dec (3040)
 2026-09-13 19:50:38,670 | INFO | __main__ | All 4 figures saved to M:\capstone-project-sk-traffic\part2_python\figures
 2026-09-13 19:50:38,671 | INFO | __main__ | Visualizations finished successfully
+2026-09-13 20:06:16,850 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
+2026-09-13 20:10:59,593 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
+2026-09-13 20:13:41,172 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
+2026-09-13 20:15:10,964 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
+2026-09-13 20:15:10,967 | WARNING | __main__ | Unknown weather condition: banana
+2026-09-13 20:16:51,673 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
