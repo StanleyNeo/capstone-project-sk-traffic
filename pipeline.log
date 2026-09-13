@@ -16,3 +16,10 @@
 2026-09-13 18:55:08,961 | INFO | __main__ | Feature table: 40575 rows x 30 columns (27 features + date_time, traffic_volume, congestion)
 2026-09-13 18:55:09,507 | INFO | __main__ | Wrote features -> M:\capstone-project-sk-traffic\data\processed\traffic_features.csv
 2026-09-13 18:55:09,508 | INFO | __main__ | Feature engineering finished successfully
+2026-09-13 19:50:37,527 | INFO | __main__ | Loading features from M:\capstone-project-sk-traffic\data\processed\traffic_features.csv
+2026-09-13 19:50:38,056 | INFO | __main__ | Saved M:\capstone-project-sk-traffic\part2_python\figures\fig1_hourly_profile.png | weekday peak 16:00 (6241) | weekend peak 13:00 (4408)
+2026-09-13 19:50:38,300 | INFO | __main__ | Saved M:\capstone-project-sk-traffic\part2_python\figures\fig2_heatmap.png | busiest cell Wed 16:00 (6414)
+2026-09-13 19:50:38,484 | INFO | __main__ | Saved M:\capstone-project-sk-traffic\part2_python\figures\fig3_weather_impact.png | highest Clouds (3617) | lowest well-sampled Fog (2666)
+2026-09-13 19:50:38,670 | INFO | __main__ | Saved M:\capstone-project-sk-traffic\part2_python\figures\fig4_monthly_rhythm.png | highest Aug (3430) | lowest Dec (3040)
+2026-09-13 19:50:38,670 | INFO | __main__ | All 4 figures saved to M:\capstone-project-sk-traffic\part2_python\figures
+2026-09-13 19:50:38,671 | INFO | __main__ | Visualizations finished successfully
