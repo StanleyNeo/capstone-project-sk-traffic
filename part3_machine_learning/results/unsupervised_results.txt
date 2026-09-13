@@ -1,0 +1,32 @@
+=== 1. K-MEANS CLUSTERING — traffic-pattern profiles ===
+
+k selection (silhouette score, higher = better-separated):
+  k=2  silhouette=0.1610  cluster sizes=[28979, 11596]
+  k=3  silhouette=0.1629  cluster sizes=[11596, 15157, 13822]
+  k=4  silhouette=0.1398  cluster sizes=[9052, 11596, 11911, 8016]
+  k=5  silhouette=0.1549  cluster sizes=[11224, 10277, 6275, 1203, 11596]
+
+Chosen k=3 (silhouette 0.1629)
+
+Cluster profiles:
+  cluster 0: 11,596 hours | avg traffic 2,624 | congested 3.1% | weekend 100% | avg temp 8.3 C
+  cluster 1: 15,157 hours | avg traffic 3,666 | congested 35.9% | weekend 0% | avg temp 18.6 C
+  cluster 2: 13,822 hours | avg traffic 3,438 | congested 31.5% | weekend 0% | avg temp -3.2 C
+
+Interpretation: the algorithm rediscovered human calendar patterns
+without labels — a weekend/low-demand cluster and weekday clusters
+split by season (warm vs cold).
+
+=== 2. ASSOCIATION RULES — what implies High traffic? ===
+itemset: 40,575 transactions x 19 items (High traffic = top quartile, >= 4,952 veh/h)
+
+Top rules -> High traffic (of 5 found):
+  {Afternoon(12-16), Weather_Clouds, Weekday} -> High traffic | support=0.052 confidence=0.741 lift=2.96
+  {Afternoon(12-16), Weekday} -> High traffic | support=0.106 confidence=0.716 lift=2.86
+  {Morning(06-11), Weekday} -> High traffic | support=0.105 confidence=0.593 lift=2.37
+  {Afternoon(12-16), Weather_Clouds} -> High traffic | support=0.055 confidence=0.564 lift=2.25
+  {Afternoon(12-16)} -> High traffic | support=0.113 confidence=0.545 lift=2.18
+
+Interpretation: lift > 1 means the combination makes congestion
+more likely than chance; weekday afternoons dominate (lift ~2.9),
+weather only appears as a minor modifier — consistent with Part 1.

@@ -1,0 +1,23 @@
+Features: 27 | train 34,042 rows (< 2018-01-01) | test 6,533 rows (2018)
+high_risk label: 594 positives (1.46% of all hours)
+
+=== 1. REGRESSION — predict traffic_volume ===
+Model                           MAE     RMSE      R2
+LinearRegression              652.3    854.1  0.8129
+RandomForestRegressor         241.2    406.8  0.9575
+Baseline reference: predicting the train mean gives MAE 1728.3
+
+=== 2. CLASSIFICATION — predict congestion (top quartile) ===
+Model                          Acc    Prec     Rec      F1     AUC
+LogisticRegression          0.9218  0.8353  0.8563  0.8457  0.9626
+  confusion matrix [[TN,FP],[FN,TP]]: [[4622, 276], [235, 1400]]
+RandomForestClassifier      0.9414  0.8695  0.9009  0.8850  0.9828
+  confusion matrix [[TN,FP],[FN,TP]]: [[4677, 221], [162, 1473]]
+  top-5 features: hour_cos (0.185), is_rush_hour (0.149), hour (0.141), temp_c (0.108), dow_sin (0.073)
+
+=== 3. HIGH-RISK PROXY — congestion AND severe weather ===
+positives: train 496 | test 98 (heavily imbalanced — class_weight='balanced')
+RandomForest(balanced)      0.9928  0.6889  0.9490  0.7983  0.9966
+  confusion matrix [[TN,FP],[FN,TP]]: [[6393, 42], [5, 93]]
+  note: with ~1.5% positives, recall matters more than accuracy —
+  a model that says 'never high-risk' scores 98.5% accuracy but is useless.

@@ -29,3 +29,66 @@
 2026-09-13 20:15:10,964 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
 2026-09-13 20:15:10,967 | WARNING | __main__ | Unknown weather condition: banana
 2026-09-13 20:16:51,673 | INFO | __main__ | Loaded 40575 rows from M:\capstone-project-sk-traffic\data\processed\traffic_clean.csv
+2026-09-13 22:58:47,860 | INFO | __main__ | Loading features from M:\capstone-project-sk-traffic\data\processed\traffic_features.csv
+2026-09-13 22:58:48,042 | INFO | __main__ | Features: 27 | train 34,042 rows (< 2018-01-01) | test 6,533 rows (2018)
+2026-09-13 22:58:48,043 | INFO | __main__ | high_risk label: 594 positives (1.46% of all hours)
+2026-09-13 22:58:48,044 | INFO | __main__ | 
+=== 1. REGRESSION — predict traffic_volume ===
+2026-09-13 22:58:48,044 | INFO | __main__ | Model                           MAE     RMSE      R2
+2026-09-13 22:58:48,176 | INFO | __main__ | LinearRegression              652.3    854.1  0.8129
+2026-09-13 22:58:50,433 | INFO | __main__ | RandomForestRegressor         241.2    406.8  0.9575
+2026-09-13 22:58:51,604 | INFO | __main__ | Baseline reference: predicting the train mean gives MAE 1728.3
+2026-09-13 22:58:51,635 | INFO | __main__ | 
+=== 2. CLASSIFICATION — predict congestion (top quartile) ===
+2026-09-13 22:58:51,635 | INFO | __main__ | Model                          Acc    Prec     Rec      F1     AUC
+2026-09-13 22:58:51,744 | INFO | __main__ | LogisticRegression          0.9218  0.8353  0.8563  0.8457  0.9626
+2026-09-13 22:58:51,746 | INFO | __main__ |   confusion matrix [[TN,FP],[FN,TP]]: [[4622, 276], [235, 1400]]
+2026-09-13 22:58:52,309 | INFO | __main__ | RandomForestClassifier      0.9414  0.8695  0.9009  0.8850  0.9828
+2026-09-13 22:58:52,311 | INFO | __main__ |   confusion matrix [[TN,FP],[FN,TP]]: [[4677, 221], [162, 1473]]
+2026-09-13 22:58:52,552 | INFO | __main__ |   top-5 features: hour_cos (0.185), is_rush_hour (0.149), hour (0.141), temp_c (0.108), dow_sin (0.073)
+2026-09-13 22:58:52,557 | INFO | __main__ | 
+=== 3. HIGH-RISK PROXY — congestion AND severe weather ===
+2026-09-13 22:58:52,558 | INFO | __main__ | positives: train 496 | test 98 (heavily imbalanced — class_weight='balanced')
+2026-09-13 22:58:53,149 | INFO | __main__ | RandomForest(balanced)      0.9928  0.6889  0.9490  0.7983  0.9966
+2026-09-13 22:58:53,151 | INFO | __main__ |   confusion matrix [[TN,FP],[FN,TP]]: [[6393, 42], [5, 93]]
+2026-09-13 22:58:53,152 | INFO | __main__ |   note: with ~1.5% positives, recall matters more than accuracy —
+2026-09-13 22:58:53,152 | INFO | __main__ |   a model that says 'never high-risk' scores 98.5% accuracy but is useless.
+2026-09-13 22:58:53,169 | INFO | __main__ | 
+Results written to M:\capstone-project-sk-traffic\part3_machine_learning\results\supervised_results.txt
+2026-09-13 22:58:53,169 | INFO | __main__ | Models saved to M:\capstone-project-sk-traffic\part3_machine_learning\models
+2026-09-13 22:58:53,172 | INFO | __main__ | Supervised training finished successfully
+2026-09-13 23:07:48,840 | INFO | __main__ | === 1. K-MEANS CLUSTERING — traffic-pattern profiles ===
+2026-09-13 23:07:49,068 | INFO | __main__ | 
+k selection (silhouette score, higher = better-separated):
+2026-09-13 23:07:50,602 | INFO | __main__ |   k=2  silhouette=0.1610  cluster sizes=[28979, 11596]
+2026-09-13 23:07:51,980 | INFO | __main__ |   k=3  silhouette=0.1629  cluster sizes=[11596, 15157, 13822]
+2026-09-13 23:07:53,315 | INFO | __main__ |   k=4  silhouette=0.1398  cluster sizes=[9052, 11596, 11911, 8016]
+2026-09-13 23:07:54,714 | INFO | __main__ |   k=5  silhouette=0.1549  cluster sizes=[11224, 10277, 6275, 1203, 11596]
+2026-09-13 23:07:54,714 | INFO | __main__ | 
+Chosen k=3 (silhouette 0.1629)
+2026-09-13 23:07:54,865 | INFO | __main__ | 
+Cluster profiles:
+2026-09-13 23:07:54,866 | INFO | __main__ |   cluster 0: 11,596 hours | avg traffic 2,624 | congested 3.1% | weekend 100% | avg temp 8.3 C
+2026-09-13 23:07:54,866 | INFO | __main__ |   cluster 1: 15,157 hours | avg traffic 3,666 | congested 35.9% | weekend 0% | avg temp 18.6 C
+2026-09-13 23:07:54,866 | INFO | __main__ |   cluster 2: 13,822 hours | avg traffic 3,438 | congested 31.5% | weekend 0% | avg temp -3.2 C
+2026-09-13 23:07:54,867 | INFO | __main__ | 
+Interpretation: the algorithm rediscovered human calendar patterns
+2026-09-13 23:07:54,867 | INFO | __main__ | without labels — a weekend/low-demand cluster and weekday clusters
+2026-09-13 23:07:54,867 | INFO | __main__ | split by season (warm vs cold).
+2026-09-13 23:07:54,868 | INFO | __main__ | 
+=== 2. ASSOCIATION RULES — what implies High traffic? ===
+2026-09-13 23:07:55,004 | INFO | __main__ | itemset: 40,575 transactions x 19 items (High traffic = top quartile, >= 4,952 veh/h)
+2026-09-13 23:07:55,033 | INFO | __main__ | 
+Top rules -> High traffic (of 5 found):
+2026-09-13 23:07:55,034 | INFO | __main__ |   {Afternoon(12-16), Weather_Clouds, Weekday} -> High traffic | support=0.052 confidence=0.741 lift=2.96
+2026-09-13 23:07:55,034 | INFO | __main__ |   {Afternoon(12-16), Weekday} -> High traffic | support=0.106 confidence=0.716 lift=2.86
+2026-09-13 23:07:55,034 | INFO | __main__ |   {Morning(06-11), Weekday} -> High traffic | support=0.105 confidence=0.593 lift=2.37
+2026-09-13 23:07:55,034 | INFO | __main__ |   {Afternoon(12-16), Weather_Clouds} -> High traffic | support=0.055 confidence=0.564 lift=2.25
+2026-09-13 23:07:55,035 | INFO | __main__ |   {Afternoon(12-16)} -> High traffic | support=0.113 confidence=0.545 lift=2.18
+2026-09-13 23:07:55,035 | INFO | __main__ | 
+Interpretation: lift > 1 means the combination makes congestion
+2026-09-13 23:07:55,035 | INFO | __main__ | more likely than chance; weekday afternoons dominate (lift ~2.9),
+2026-09-13 23:07:55,035 | INFO | __main__ | weather only appears as a minor modifier — consistent with Part 1.
+2026-09-13 23:07:55,037 | INFO | __main__ | 
+Results written to M:\capstone-project-sk-traffic\part3_machine_learning\results\unsupervised_results.txt
+2026-09-13 23:07:55,038 | INFO | __main__ | Unsupervised analysis finished successfully
