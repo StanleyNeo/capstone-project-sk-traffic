@@ -100,3 +100,27 @@ Results written to M:\capstone-project-sk-traffic\part3_machine_learning\results
 2026-09-14 09:38:16,733 | INFO | __main__ | All 3 runs logged. View them with:
 2026-09-14 09:38:16,734 | INFO | __main__ |     cd part3_machine_learning/mlflow
 2026-09-14 09:38:16,734 | INFO | __main__ |     mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
+2026-09-14 11:38:40,339 | INFO | app | Models loaded from M:\capstone-project-sk-traffic\part3_machine_learning\models
+2026-09-14 11:38:40,343 | INFO | __main__ | PASS  /health -> {'status': 'ok', 'models_loaded': True}
+2026-09-14 11:50:43,825 | INFO | app | Models loaded from M:\capstone-project-sk-traffic\part3_machine_learning\models
+2026-09-14 11:50:43,830 | INFO | httpx2 | HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-09-14 11:50:43,831 | INFO | __main__ | PASS  /health -> {'status': 'ok', 'models_loaded': True}
+2026-09-14 11:52:23,806 | INFO | app | Models loaded from M:\capstone-project-sk-traffic\part3_machine_learning\models
+2026-09-14 11:52:23,810 | INFO | httpx2 | HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-09-14 11:52:23,810 | INFO | __main__ | PASS  /health -> {'status': 'ok', 'models_loaded': True}
+2026-09-14 11:59:05,172 | INFO | app | Models loaded from M:\capstone-project-sk-traffic\part3_machine_learning\models
+2026-09-14 11:59:05,176 | INFO | httpx2 | HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-09-14 11:59:05,177 | INFO | __main__ | PASS  /health -> {'status': 'ok', 'models_loaded': True}
+2026-09-14 11:59:05,322 | INFO | app | predict hour=17 dow=2 wx=Clear -> volume=6406 p_cong=1.000 (HIGH)
+2026-09-14 11:59:05,327 | INFO | httpx2 | HTTP Request: POST http://testserver/predict "HTTP/1.1 200 OK"
+2026-09-14 11:59:05,327 | INFO | __main__ | PASS  weekday 17:00 Clear -> {'predicted_traffic_volume': 6405.6, 'congestion_probability': 1.0, 'congestion_predicted': True, 'risk_level': 'HIGH'}
+2026-09-14 11:59:05,391 | INFO | app | predict hour=3 dow=6 wx=Clear -> volume=450 p_cong=0.000 (LOW)
+2026-09-14 11:59:05,392 | INFO | httpx2 | HTTP Request: POST http://testserver/predict "HTTP/1.1 200 OK"
+2026-09-14 11:59:05,392 | INFO | __main__ | PASS  Sunday 03:00 Clear  -> {'predicted_traffic_volume': 449.6, 'congestion_probability': 0.0, 'congestion_predicted': False, 'risk_level': 'LOW'}
+2026-09-14 11:59:05,397 | INFO | httpx2 | HTTP Request: POST http://testserver/predict "HTTP/1.1 422 Unprocessable Content"
+2026-09-14 11:59:05,397 | INFO | __main__ | PASS  hour=25 rejected with HTTP 422 (input validation works)
+2026-09-14 11:59:05,399 | INFO | httpx2 | HTTP Request: POST http://testserver/predict "HTTP/1.1 422 Unprocessable Content"
+2026-09-14 11:59:05,400 | INFO | __main__ | PASS  weather_main='banana' rejected with HTTP 422
+2026-09-14 11:59:05,401 | INFO | __main__ | All 5 API tests passed.
+2026-09-14 12:04:24,858 | INFO | __main__ | Models loaded from M:\capstone-project-sk-traffic\part3_machine_learning\models
+2026-09-14 12:06:32,663 | INFO | __main__ | predict hour=8 dow=6 wx=Snow -> volume=1848 p_cong=0.000 (LOW)
