@@ -92,3 +92,11 @@ Interpretation: lift > 1 means the combination makes congestion
 2026-09-13 23:07:55,037 | INFO | __main__ | 
 Results written to M:\capstone-project-sk-traffic\part3_machine_learning\results\unsupervised_results.txt
 2026-09-13 23:07:55,038 | INFO | __main__ | Unsupervised analysis finished successfully
+2026-09-14 09:37:20,797 | INFO | __main__ | Train 34,042 rows | Test 6,533 rows
+2026-09-14 09:37:27,186 | INFO | __main__ | MLflow tracking URI: sqlite:///M:/capstone-project-sk-traffic/part3_machine_learning/mlflow/mlflow.db
+2026-09-14 09:37:46,967 | INFO | __main__ | Logged run: linear-regression
+2026-09-14 09:38:05,015 | INFO | __main__ | Logged run: random-forest-regressor
+2026-09-14 09:38:16,699 | INFO | __main__ | Logged run: random-forest-classifier
+2026-09-14 09:38:16,733 | INFO | __main__ | All 3 runs logged. View them with:
+2026-09-14 09:38:16,734 | INFO | __main__ |     cd part3_machine_learning/mlflow
+2026-09-14 09:38:16,734 | INFO | __main__ |     mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000

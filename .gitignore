@@ -24,3 +24,6 @@ Thumbs.db
 
 # Trained model binaries (regenerate via train_supervised.py)
 *.joblib
+
+# MLflow run artifacts (regenerate via track_experiments.py)
+mlruns/
