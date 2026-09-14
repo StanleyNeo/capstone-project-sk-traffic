@@ -124,3 +124,36 @@ Results written to M:\capstone-project-sk-traffic\part3_machine_learning\results
 2026-09-14 11:59:05,401 | INFO | __main__ | All 5 API tests passed.
 2026-09-14 12:04:24,858 | INFO | __main__ | Models loaded from M:\capstone-project-sk-traffic\part3_machine_learning\models
 2026-09-14 12:06:32,663 | INFO | __main__ | predict hour=8 dow=6 wx=Snow -> volume=1848 p_cong=0.000 (LOW)
+2026-09-14 13:37:19,546 | INFO | __main__ | Reference (train, Jan-Sep only): 24,621 hours | Current batch (2018, Jan-Sep): 6,533 hours
+2026-09-14 13:37:19,546 | INFO | __main__ | Drift monitored on 15 environmental features (calendar features are deterministic and excluded)
+2026-09-14 13:37:19,546 | INFO | __main__ | Thresholds: PASS <= 0.1 < WARN <= 0.25 < ALERT
+2026-09-14 13:37:19,546 | INFO | __main__ | 
+2026-09-14 13:37:19,547 | INFO | __main__ | --- Scenario A - real 2018 traffic (expect: no action needed) ---
+2026-09-14 13:37:19,547 | INFO | __main__ |   ALERT clouds_all             PSI = 0.267
+2026-09-14 13:37:19,547 | INFO | __main__ |   Worst feature: clouds_all (PSI = 0.267)
+2026-09-14 13:37:19,547 | INFO | __main__ |   Overall data-drift verdict: ALERT
+2026-09-14 13:37:19,548 | INFO | __main__ | 
+2026-09-14 13:37:19,548 | INFO | __main__ | --- Scenario B - synthetic heat wave + extreme rain (expected: ALERT) ---
+2026-09-14 13:37:19,548 | INFO | __main__ |   ALERT temp_c                 PSI = 1.377
+2026-09-14 13:37:19,548 | INFO | __main__ |   WARN  clouds_all             PSI = 0.246
+2026-09-14 13:37:19,548 | INFO | __main__ |   Worst feature: temp_c (PSI = 1.377)
+2026-09-14 13:37:19,548 | INFO | __main__ |   Overall data-drift verdict: ALERT
+2026-09-14 13:37:19,549 | INFO | __main__ | 
+2026-09-14 13:37:19,549 | INFO | __main__ | --- Performance drift ---
+2026-09-14 13:37:19,549 | INFO | __main__ |   MAE on current batch: 241.2 (reference at training: 241.2)
+2026-09-14 13:37:19,549 | INFO | __main__ |   Performance verdict: PASS
+2026-09-14 13:37:19,550 | INFO | __main__ | 
+2026-09-14 13:37:19,550 | INFO | __main__ | --- Monitoring summary ---
+2026-09-14 13:37:19,550 | INFO | __main__ |   Scenario A (real 2018):      data drift = ALERT, performance = PASS
+2026-09-14 13:37:19,550 | INFO | __main__ |   Scenario B (injected drift): data drift = ALERT (detected as designed)
+2026-09-14 13:37:19,550 | INFO | __main__ | 
+2026-09-14 13:37:19,551 | INFO | __main__ | Decision framework: retraining is triggered only when a data-drift
+2026-09-14 13:37:19,551 | INFO | __main__ | ALERT coincides with performance degradation. In scenario A the single
+2026-09-14 13:37:19,552 | INFO | __main__ | flagged feature (clouds_all - a coarse, low-importance sensor input) did
+2026-09-14 13:37:19,552 | INFO | __main__ | NOT degrade accuracy (MAE unchanged at 241.2), so the action is:
+2026-09-14 13:37:19,552 | INFO | __main__ | log and investigate, no retrain. Scenario B proves the system catches
+2026-09-14 13:37:19,552 | INFO | __main__ | genuine drift when it occurs.
+2026-09-14 13:37:19,553 | INFO | __main__ | Report written to M:\capstone-project-sk-traffic\part3_machine_learning\monitoring\drift_report.txt
+2026-09-14 14:10:39,827 | INFO | __main__ | recommendation served: weekday 17:00 Clear -> HIGH (ratio 3.77)
+2026-09-14 14:11:06,547 | INFO | __main__ | recommendation served: weekend 03:00 Clear -> LOW (ratio 0.00)
+2026-09-14 14:11:21,091 | INFO | __main__ | recommendation served: weekday 08:00 Snow -> HIGH (ratio 2.32)

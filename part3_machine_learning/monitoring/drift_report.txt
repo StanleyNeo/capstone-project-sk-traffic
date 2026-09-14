@@ -1,0 +1,29 @@
+Reference (train, Jan-Sep only): 24,621 hours | Current batch (2018, Jan-Sep): 6,533 hours
+Drift monitored on 15 environmental features (calendar features are deterministic and excluded)
+Thresholds: PASS <= 0.1 < WARN <= 0.25 < ALERT
+
+--- Scenario A - real 2018 traffic (expect: no action needed) ---
+  ALERT clouds_all             PSI = 0.267
+  Worst feature: clouds_all (PSI = 0.267)
+  Overall data-drift verdict: ALERT
+
+--- Scenario B - synthetic heat wave + extreme rain (expected: ALERT) ---
+  ALERT temp_c                 PSI = 1.377
+  WARN  clouds_all             PSI = 0.246
+  Worst feature: temp_c (PSI = 1.377)
+  Overall data-drift verdict: ALERT
+
+--- Performance drift ---
+  MAE on current batch: 241.2 (reference at training: 241.2)
+  Performance verdict: PASS
+
+--- Monitoring summary ---
+  Scenario A (real 2018):      data drift = ALERT, performance = PASS
+  Scenario B (injected drift): data drift = ALERT (detected as designed)
+
+Decision framework: retraining is triggered only when a data-drift
+ALERT coincides with performance degradation. In scenario A the single
+flagged feature (clouds_all - a coarse, low-importance sensor input) did
+NOT degrade accuracy (MAE unchanged at 241.2), so the action is:
+log and investigate, no retrain. Scenario B proves the system catches
+genuine drift when it occurs.

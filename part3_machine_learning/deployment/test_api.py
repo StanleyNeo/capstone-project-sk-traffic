@@ -74,4 +74,5 @@ if __name__ == "__main__":
     handler_console.setFormatter(fmt)
     logging.basicConfig(level=logging.INFO, handlers=[handler_file, handler_console])
     logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("http2").setLevel(logging.WARNING)
     main()

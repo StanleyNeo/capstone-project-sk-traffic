@@ -32,7 +32,17 @@ by the pipeline: 7,629 duplicate timestamps, 10 zero-Kelvin temperatures, a
 │   ├── cli_app/main.py         # Task 4: CLI (summary | hourly | weather | top)
 │   ├── figures/                # generated charts
 │   └── reports/                # part2_report.pdf
-├── part3_machine_learning/     # (Day 6–7)
+├── part3_machine_learning/
+│   ├── supervised/             # train_supervised.py: regression + classification + high-risk
+│   ├── unsupervised/           # train_unsupervised.py: K-means + association rules
+│   ├── notebooks/              # lstm_shap_analysis.ipynb + SHAP figures
+│   ├── mlflow/                 # track_experiments.py (3 runs, SQLite backend)
+│   ├── deployment/             # FastAPI app.py + test_api.py (5 smoke tests)
+│   ├── monitoring/             # drift_check.py + drift_report.txt (PASS/ALERT)
+│   ├── recommendation_system/  # recommender.py CLI advisor
+│   ├── models/                 # *.joblib (gitignored — regenerate via train_supervised.py)
+│   ├── results/                # supervised_results.txt + unsupervised_results.txt
+│   └── reports/                # part3_ml_report.pdf + responsible_ai_report.pdf + evidence
 ├── pipeline.log                # full audit trail of every pipeline run
 └── requirements.txt
 ```
@@ -72,10 +82,42 @@ Every run appends to `pipeline.log` (INFO/WARNING/DEBUG with timestamps).
 - Target: congestion = top quartile (≥ 4,952 veh/h) → 25.02% positive
 - 4 figures + 4-command CLI — see `part2_python/reports/part2_report.pdf`
 
-## Part 3 — Machine learning (in progress)
+## Part 3 — Machine Learning
 
 Supervised + unsupervised models, LSTM with SHAP, MLflow tracking, FastAPI mock
 service, monitoring, and a recommendation component.
+
+**Supervised learning** (`part3_machine_learning/supervised/`) — leakage-free time-based
+split (train < 2018-01-01: 34,042 h; test = 2018: 6,533 h):
+
+| Task | Best model | Key metrics |
+|------|-----------|-------------|
+| Volume regression | RandomForest (100 trees) | MAE 241.2, RMSE 406.8, R² 0.9575 (naive baseline MAE 1,728.3) |
+| Congestion classification | RandomForest | Accuracy 0.941, F1 0.885, ROC-AUC 0.983 |
+| High-risk hours (1.46% positive) | RandomForest, balanced weights | Recall 0.949, precision 0.689 |
+
+**Unsupervised learning** (`part3_machine_learning/unsupervised/`) — K-means (k = 3 by
+silhouette, 0.163) rediscovered the calendar without labels: weekend, summer-weekday and
+winter-weekday clusters. Association rules (Apriori): {Afternoon, Weekday} → High traffic
+at confidence 0.716, lift 2.86.
+
+**Advanced analysis** (`part3_machine_learning/notebooks/lstm_shap_analysis.ipynb`) —
+LSTM next-hour forecaster (MAE 389.4, beats persistence 588.9, loses to RF 241.2 — feature
+engineering encodes domain knowledge that a small LSTM must relearn) and SHAP
+explainability confirming calendar features dominate congestion prediction.
+
+**MLOps & deployment**
+- `mlflow/track_experiments.py` — MLflow tracking: 3 runs with params, metrics, artifacts (SQLite backend)
+- `deployment/app.py` + `test_api.py` — FastAPI mock service, 5 passing smoke tests; interactive docs at `/docs`
+- `monitoring/drift_check.py` — PSI data-drift + performance monitoring with PASS/WARN/ALERT verdicts and a documented retraining policy
+- `recommendation_system/recommender.py` — CLI advisor for commuters and traffic operations
+
+**Reports** — see `part3_machine_learning/reports/part3_ml_report.pdf` (full Part 3 results)
+and `part3_machine_learning/reports/responsible_ai_report.pdf`
+(proxy-label limitations, fairness, transparency via SHAP, monitoring-based accountability).
+
+> Trained model binaries (`*.joblib`) are gitignored — regenerate them with
+> `python part3_machine_learning/supervised/train_supervised.py`.
 
 ## License
 
